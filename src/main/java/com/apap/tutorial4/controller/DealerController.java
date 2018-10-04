@@ -43,7 +43,7 @@ public class DealerController {
 		DealerModel archive = dealerService.getDealerDetailById(id).get();
 //		DealerModel archive = dealerService.getDealerDetailById(id).get();
 		
-//		if (id.is){
+//		if (dealer.isPresent()){
 //			model.addAttribute("error",true);
 //		return "eror";
 //		}
@@ -51,4 +51,39 @@ public class DealerController {
 		model.addAttribute("dealer",archive);
 		return "view-dealer";
 	}
+	@RequestMapping(value = "/dealer/delete", method = RequestMethod.GET)
+	private String deleteDealer(@RequestParam("dealerId") long id, Model model) {
+		Optional<DealerModel> dealer = dealerService.getDealerDetailById(id);
+		if (dealer.isPresent()) {
+			dealerService.deleteDealer(dealer.get());
+			return "delete";
+		}
+		return "error";
+}
+	@RequestMapping(value = "dealer/view" , method = RequestMethod.GET)
+	private String viewDealer(@RequestParam ("dealerId") long dealerId, Model model) {
+		DealerModel dealer = dealerService.getDealerDetailById(dealerId).get();
+		long addCarId = dealerId;
+		
+		model.addAttribute("dealer", dealer);
+		model.addAttribute("id", addCarId);
+		model.addAttribute("listCar", carService.sortByPriceDesc(dealerId));
+		
+		return "view";
+}
+	@RequestMapping(value = "/dealer/update/{id}", method = RequestMethod.GET)
+	private String updateDealer(@PathVariable(value = "id") long id, Model model) {
+		DealerModel dealer = dealerService.getDealerDetailById(id).get();
+		model.addAttribute("dealer",dealer);
+		return "updateDealer";
+	}
+	
+	@RequestMapping(value = "/dealer/update/{id}", method = RequestMethod.POST)
+	private String updateDealerSubmit(@PathVariable (value = "id") long id, @ModelAttribute Optional<DealerModel> dealer) {
+		if(dealer.isPresent()) {
+			dealerService.updateDealer(id, dealer);
+			return "update";
+		}
+		return "error";
+}
 }

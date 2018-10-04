@@ -30,5 +30,20 @@ public class CarServiceImpl implements CarService {
 	@Override
 	public CarModel getCar(Long id) {
 		return carDb.findById(id).get();
+		
+		
+}
+	@Override
+	public List<CarModel> sortByPriceDesc(Long dealer_id) {
+		return carDb.findByDealerIdOrderByPriceDesc(dealer_id);
+}
+	@Override
+	public void updateCar(long id, CarModel car) {
+		CarModel update = carDb.getOne(id);
+		update.setBrand(car.getBrand());
+		update.setType(car.getType());
+		update.setPrice(car.getPrice());
+		update.setAmount(car.getAmount());
+		carDb.save(update);
 }
 }

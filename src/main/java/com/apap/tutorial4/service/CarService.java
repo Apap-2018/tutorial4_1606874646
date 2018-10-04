@@ -7,5 +7,6 @@ public interface CarService {
 	void addCar(CarModel car);
 	void deleteCar(CarModel car);
 	CarModel getCar(Long id);
-	//void updateCar(long id,CarModel car);
+	void updateCar(long id,CarModel car);
+	List<CarModel> sortByPriceDesc(Long dealer_id);
 }

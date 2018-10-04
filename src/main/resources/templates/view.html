@@ -35,7 +35,7 @@
 		</tbody>
 		</table> 
 		
-		<a th:href="@{/car/add/} + ${id}"> Add Car </a>
+		<td><a th:href="@{'/car/add'} + ${dealer.id}">Tambah Mobil</a></td>
 		
 		<form th:action="@{/dealer/delete}" th:object="${dealer}" method="GET">
 			<input  type="hidden" th:value="${dealer.id}" name="dealerId"></input>
