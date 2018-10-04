@@ -1,5 +1,6 @@
 package com.apap.tutorial4.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.apap.tutorial4.model.DealerModel;
+import com.apap.tutorial4.repository.DealerDb;
 import com.apap.tutorial4.service.CarService;
 import com.apap.tutorial4.service.DealerService;
 
@@ -85,5 +87,13 @@ public class DealerController {
 			return "update";
 		}
 		return "error";
+}
+	@RequestMapping(value = "/dealer/view/all", method = RequestMethod.GET)
+	private String viewAllDealer(Model model) { 
+		DealerDb dealerRepo = dealerService.viewAllDealer();
+		List<DealerModel> listDealer = dealerRepo.findAll();
+		model.addAttribute("listDealer",listDealer);
+		
+		return "view-all";
 }
 }
